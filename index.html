@@ -14,6 +14,34 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "David Martínez Muelas",
+      "jobTitle": "Desarrollador de software freelance",
+      "url": "https://davidmartinezmuelas-tech.github.io/muelas-dev/",
+      "email": "davidmartinezmuelas@gmail.com",
+      "address": { "@type": "PostalAddress", "addressLocality": "Molina de Segura", "addressRegion": "Murcia", "addressCountry": "ES" },
+      "sameAs": [
+        "https://github.com/davidmartinezmuelas-tech",
+        "https://www.linkedin.com/in/david-mart%C3%ADnez-muelas-731a64411/"
+      ],
+      "knowsAbout": ["Python", "FastAPI", "Flutter", "Vue 3", "PostgreSQL", "Integración de IA", "Backend", "Apps móviles"]
+    },
+    {
+      "@type": "ProfessionalService",
+      "name": "Muelas Dev",
+      "description": "Desarrollo de software freelance: backend con Python y FastAPI, apps móviles con Flutter, paneles Vue 3 e integración de IA.",
+      "url": "https://davidmartinezmuelas-tech.github.io/muelas-dev/",
+      "areaServed": ["Murcia", "España", "Remoto"],
+      "founder": { "@type": "Person", "name": "David Martínez Muelas" }
+    }
+  ]
+}
+</script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -241,6 +269,22 @@
   .contact-link-label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .contact-link:hover .contact-link-label { color: rgba(255,255,255,0.5); }
 
+  /* ── FORMULARIO ── */
+  .contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+  .form-field { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-field label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    font-family: var(--sans); font-size: 14px; color: var(--ink);
+    background: #fff; border: 1px solid var(--border); border-radius: 0;
+    padding: 10px 12px; width: 100%; transition: border-color 0.2s;
+  }
+  .contact-form input:focus, .contact-form select:focus, .contact-form textarea:focus { outline: none; border-color: var(--ink); }
+  .contact-form textarea { resize: vertical; min-height: 92px; }
+  button.btn-primary { border: none; cursor: pointer; font: inherit; align-self: flex-start; }
+  .form-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form-note { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.04em; }
+
   /* ── FOOTER ── */
   footer { background: var(--ink); }
   footer .w {
@@ -413,6 +457,13 @@
         <div class="service-tags"><span class="service-tag">Claude API</span><span class="service-tag">Groq LLM</span><span class="service-tag">Vosk STT</span><span class="service-tag">FCM</span></div>
       </div>
     </div>
+    <div style="margin-top:2rem;text-align:center">
+      <p style="font-size:14px;color:#555;margin-bottom:1rem">
+        <span data-lang="es">¿Tu caso no encaja exactamente con esto? Cuéntame qué necesitas y te digo cómo lo resolvería.</span>
+        <span data-lang="en">Your case doesn't fit exactly? Tell me what you need and I'll explain how I'd solve it.</span>
+      </p>
+      <a href="#contacto" class="btn-primary"><span data-lang="es">Hablemos del proyecto →</span><span data-lang="en">Let's talk about your project →</span></a>
+    </div>
   </div>
 </section>
 
@@ -488,8 +539,8 @@
       <div>
         <p class="about-statement"><span data-lang="es">Experiencia real. <em>Código en producción.</em></span><span data-lang="en">Real experience. <em>Code in production.</em></span></p>
         <div class="about-body">
-          <p data-lang="es">Soy David, desarrollador junior con base en Molina de Segura (Murcia). Lo que me diferencia no es solo el tiempo que llevo programando, sino cómo trabajo: combino conocimiento técnico sólido con un uso avanzado de IA para entregar proyectos reales a una velocidad y calidad que normalmente requieren equipos más grandes.</p>
-          <p data-lang="en">I'm David, a junior developer based in Molina de Segura (Murcia). What sets me apart isn't just how long I've been coding, but how I work: I combine solid technical knowledge with advanced AI use to deliver real projects at a speed and quality that usually requires larger teams.</p>
+          <p data-lang="es">Soy David, desarrollador de software con base en Molina de Segura (Murcia). Lo que me diferencia es cómo trabajo: combino una base técnica sólida con un uso avanzado de IA para entregar proyectos reales —ya en producción— a una velocidad y calidad que normalmente requieren equipos más grandes.</p>
+          <p data-lang="en">I'm David, a software developer based in Molina de Segura (Murcia). What sets me apart is how I work: I combine a solid technical foundation with advanced AI use to deliver real projects —already in production— at a speed and quality that usually require larger teams.</p>
           <p data-lang="es">He diseñado y desarrollado de forma principal un sistema de teleasistencia completo — backend, app móvil, panel de administración e integración de voz — que hoy está activo con usuarios reales. Un proyecto de producción real, no de portfolio.</p>
           <p data-lang="en">I primarily designed and developed a complete teleassistance system — backend, mobile app, admin panel and voice integration — that is today active with real users. A real production project, not a portfolio piece.</p>
         </div>
@@ -532,20 +583,69 @@
           <span data-lang="es">Disponible para proyectos freelance · Murcia o remoto · Respuesta en &lt;24h</span>
           <span data-lang="en">Available for freelance projects · Murcia or remote · Reply within 24h</span>
         </div>
+        <div class="contact-links" style="margin-top:1.5rem">
+          <a href="mailto:davidmartinezmuelas@gmail.com" class="contact-link">
+            <div><div class="contact-link-label">Email</div><div>davidmartinezmuelas@gmail.com</div></div>
+            <span>→</span>
+          </a>
+          <a href="https://github.com/davidmartinezmuelas-tech" target="_blank" rel="noopener" class="contact-link">
+            <div><div class="contact-link-label">GitHub</div><div>davidmartinezmuelas-tech</div></div>
+            <span>→</span>
+          </a>
+          <a href="https://www.linkedin.com/in/david-mart%C3%ADnez-muelas-731a64411/" target="_blank" rel="noopener" class="contact-link">
+            <div><div class="contact-link-label">LinkedIn</div><div>david-martínez-muelas</div></div>
+            <span>→</span>
+          </a>
+        </div>
       </div>
-      <div class="contact-links">
-        <a href="mailto:davidmartinezmuelas@gmail.com" class="contact-link">
-          <div><div class="contact-link-label">Email</div><div>davidmartinezmuelas@gmail.com</div></div>
-          <span>→</span>
-        </a>
-        <a href="https://github.com/davidmartinezmuelas-tech" target="_blank" class="contact-link">
-          <div><div class="contact-link-label">GitHub</div><div>davidmartinezmuelas-tech</div></div>
-          <span>→</span>
-        </a>
-        <a href="https://www.linkedin.com/in/david-mart%C3%ADnez-muelas-731a64411/" target="_blank" class="contact-link">
-          <div><div class="contact-link-label">LinkedIn</div><div>david-martínez-muelas</div></div>
-          <span>→</span>
-        </a>
+      <div>
+        <form class="contact-form" action="https://formsubmit.co/davidmartinezmuelas@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde muelas-dev">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://davidmartinezmuelas-tech.github.io/muelas-dev/gracias.html">
+          <input type="text" name="_honey" class="form-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-name"><span data-lang="es">Nombre</span><span data-lang="en">Name</span></label>
+              <input id="cf-name" type="text" name="nombre" required autocomplete="name">
+            </div>
+            <div class="form-field">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" type="email" name="email" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="cf-type"><span data-lang="es">Tipo de proyecto</span><span data-lang="en">Project type</span></label>
+              <select id="cf-type" name="tipo">
+                <option>Backend / API</option>
+                <option>App móvil / Mobile app</option>
+                <option>Web / Panel</option>
+                <option>Integración de IA / AI</option>
+                <option>Automatización / Automation</option>
+                <option>Otro / Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="cf-budget"><span data-lang="es">Presupuesto orientativo</span><span data-lang="en">Approx. budget</span></label>
+              <select id="cf-budget" name="presupuesto">
+                <option value="" data-lang="es">A definir</option>
+                <option value="" data-lang="en">To define</option>
+                <option>&lt; 1.000 €</option>
+                <option>1.000 – 3.000 €</option>
+                <option>3.000 – 8.000 €</option>
+                <option>&gt; 8.000 €</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="cf-msg"><span data-lang="es">Cuéntame el proyecto</span><span data-lang="en">Tell me about the project</span></label>
+            <textarea id="cf-msg" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="btn-primary form-submit"><span data-lang="es">Enviar mensaje</span><span data-lang="en">Send message</span></button>
+          <p class="form-note"><span data-lang="es">Respuesta en menos de 24 h · Sin compromiso</span><span data-lang="en">Reply within 24h · No commitment</span></p>
+        </form>
       </div>
     </div>
   </div>
