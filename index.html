@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Muelas Dev — Desarrollo de Software Freelance</title>
+<meta name="description" content="David Martínez Muelas — desarrollo de software freelance en Murcia. Backend con Python y FastAPI, apps móviles con Flutter, paneles Vue 3 e integración de IA. Código en producción con usuarios reales.">
+<meta name="theme-color" content="#111111">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Muelas Dev — Desarrollo de Software Freelance">
+<meta property="og:description" content="Backend, apps móviles e integración de IA. Software real, para proyectos que necesitan funcionar de verdad.">
+<meta property="og:locale" content="es_ES">
+<!-- TODO og:image: añadir cuando exista una imagen de marca (URL absoluta) -->
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -13,8 +21,11 @@
     --ink: #111111;
     --paper: #f7f5f0;
     --paper-dark: #ede9e1;
-    --muted: #888;
+    --muted: #6b675f;
     --border: #d0ccc4;
+    --accent: #b5402e;
+    --ok: #1f8a4c;
+    --nav-h: 40px;
     --serif: 'Playfair Display', Georgia, serif;
     --mono: 'IBM Plex Mono', monospace;
     --sans: 'IBM Plex Sans', sans-serif;
@@ -24,11 +35,14 @@
 
   html { scroll-behavior: smooth; }
 
+  ::selection { background: var(--accent); color: #fff; }
+  a:focus-visible, button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
   body {
     background: var(--paper);
     color: var(--ink);
     font-family: var(--sans);
-    font-weight: 300;
+    font-weight: 400;
     font-size: 16px;
     line-height: 1.7;
     overflow-x: hidden;
@@ -47,7 +61,7 @@
     top: 0; left: 0; right: 0;
     z-index: 100;
     background: var(--ink);
-    height: 40px;
+    height: var(--nav-h);
     font-family: var(--mono);
     font-size: 11px;
     letter-spacing: 0.05em;
@@ -69,9 +83,19 @@
   }
   .lang-toggle button.active { background: #fff; color: var(--ink); }
 
+  /* ── HAMBURGUESA (solo móvil) ── */
+  .nav-burger {
+    display: none; flex-direction: column; gap: 4px;
+    background: none; border: none; cursor: pointer; padding: 8px 4px;
+  }
+  .nav-burger span { width: 20px; height: 1.5px; background: #fff; transition: transform 0.25s, opacity 0.2s; }
+  .nav.open .nav-burger span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+  .nav.open .nav-burger span:nth-child(2) { opacity: 0; }
+  .nav.open .nav-burger span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
   /* ── HEADER ── */
   header {
-    margin-top: 40px;
+    margin-top: var(--nav-h);
     border-bottom: 3px solid var(--ink);
   }
   .header-top {
@@ -88,15 +112,15 @@
   .header-brand {
     font-family: var(--serif);
     font-size: clamp(44px, 5.5vw, 80px);
-    font-weight: 900; line-height: 0.92; letter-spacing: -2px; color: var(--ink);
+    font-weight: 900; line-height: 0.92; letter-spacing: -0.03em; color: var(--ink);
   }
-  .header-brand span { font-style: italic; }
+  .header-brand span { font-style: italic; color: var(--accent); }
   .header-right {
     text-align: right; font-family: var(--mono); font-size: 12px;
     color: var(--muted); line-height: 1.8;
   }
   .status { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11px; margin-bottom: 4px; }
-  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: pulse 2s ease-in-out infinite; }
+  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(31,138,76,0.15); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .header-tagline {
     font-family: var(--serif); font-style: italic; font-size: 17px;
@@ -105,7 +129,7 @@
   }
 
   /* ── SECTIONS ── */
-  section { border-bottom: 1px solid var(--border); }
+  section { border-bottom: 1px solid var(--border); scroll-margin-top: var(--nav-h); }
   section .w { padding-top: 3rem; padding-bottom: 3rem; }
 
   .section-label {
@@ -123,7 +147,7 @@
     font-family: var(--serif); font-size: clamp(22px, 2.5vw, 32px);
     font-weight: 700; line-height: 1.2;
   }
-  .hero-statement em { font-style: italic; font-weight: 900; }
+  .hero-statement em { font-style: italic; font-weight: 900; color: var(--accent); }
   .cta-row { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary {
     display: inline-block; background: var(--ink); color: #fff;
@@ -136,7 +160,7 @@
     font-size: 12px; letter-spacing: 0.08em; padding: 12px 24px;
     text-decoration: none; border: 1px solid var(--border); transition: all 0.2s; white-space: nowrap;
   }
-  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
   .hero-body { font-size: 15px; color: #444; line-height: 1.8; }
   .hero-body p + p { margin-top: 0.75rem; }
@@ -164,7 +188,7 @@
   .service-item { padding: 2rem 1.5rem; border-right: 1px solid var(--border); transition: background 0.2s; }
   .service-item:last-child { border-right: none; }
   .service-item:hover { background: var(--paper-dark); }
-  .service-num { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-bottom: 1rem; }
+  .service-num { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 1rem; }
   .service-title { font-family: var(--serif); font-size: 19px; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
   .service-desc { font-size: 14px; color: #555; line-height: 1.7; }
   .service-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start; }
@@ -188,10 +212,10 @@
   /* ── SOBRE MÍ ── */
   .about-grid { display: grid; grid-template-columns: 1fr 280px; gap: 4rem; align-items: start; }
   .about-statement { font-family: var(--serif); font-size: 25px; font-weight: 700; line-height: 1.25; margin-bottom: 1.5rem; }
-  .about-statement em { font-style: italic; font-weight: 900; }
+  .about-statement em { font-style: italic; font-weight: 900; color: var(--accent); }
   .about-body { font-size: 15px; color: #444; line-height: 1.8; }
   .about-body p + p { margin-top: 1rem; }
-  .about-sidebar { border-left: 3px solid var(--ink); padding-left: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .about-sidebar { border-left: 3px solid var(--accent); padding-left: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
   .sidebar-block-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
   .sidebar-block-content { font-size: 14px; color: #444; line-height: 1.7; }
   .sidebar-block-content strong { font-weight: 500; color: var(--ink); }
@@ -199,7 +223,7 @@
   /* ── CONTACTO ── */
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
   .contact-intro { font-family: var(--serif); font-size: 30px; font-weight: 700; line-height: 1.15; margin-bottom: 1.5rem; }
-  .contact-intro em { font-style: italic; font-weight: 900; }
+  .contact-intro em { font-style: italic; font-weight: 900; color: var(--accent); }
   .contact-body { font-size: 15px; color: #444; line-height: 1.8; }
   .contact-avail { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .contact-avail strong { display: block; font-size: 13px; color: var(--ink); font-weight: 500; margin-bottom: 4px; }
@@ -212,6 +236,8 @@
   }
   .contact-link:last-child { border-bottom: none; }
   .contact-link:hover { background: var(--ink); color: #fff; }
+  .contact-link > span:last-child { color: var(--accent); transition: color 0.15s; }
+  .contact-link:hover > span:last-child { color: #fff; }
   .contact-link-label { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
   .contact-link:hover .contact-link-label { color: rgba(255,255,255,0.5); }
 
@@ -228,13 +254,10 @@
   .fade-in { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-  /* ── IDIOMAS ── */
-  [data-en] { display: none; }
-  body.lang-en [data-es] { display: none; }
-  body.lang-en [data-en] { display: block; }
-  body.lang-en .ies { display: none; }
-  body.lang-en .ien { display: inline !important; }
-  .ien { display: none; }
+  /* ── IDIOMAS (mecanismo único: data-lang + display:revert) ── */
+  [data-lang="en"] { display: none; }
+  body.lang-en [data-lang="es"] { display: none; }
+  body.lang-en [data-lang="en"] { display: revert; }
 
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
@@ -244,12 +267,25 @@
     .service-item { border-right: none; border-bottom: 1px solid var(--border); }
     .service-item:last-child { border-bottom: none; }
     .project-item { grid-template-columns: 80px 1fr; gap: 1rem; }
-    .project-tag-main { display: none; }
+    .project-item > div:last-child { display: none; }
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
     .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
     .case-inner { grid-template-columns: 1fr; }
     .case-stats { border-left: none; border-top: 1px solid var(--border); padding-left: 0; padding-top: 1rem; }
-    .nav-links { display: none; }
+
+    .nav .w { position: relative; }
+    .nav-burger { display: flex; }
+    .nav-links {
+      display: flex; flex-direction: column; gap: 0;
+      position: absolute; top: var(--nav-h); left: 0; right: 0;
+      background: var(--ink); padding: 0.25rem var(--pad) 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+      opacity: 0; transform: translateY(-8px); pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .nav.open .nav-links { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .nav-links a { padding: 0.7rem 0; font-size: 13px; }
   }
 </style>
 </head>
@@ -258,12 +294,15 @@
 <!-- NAV -->
 <nav class="nav">
   <div class="w">
-    <div class="nav-links">
-      <a href="#inicio"><span class="ies">Inicio</span><span class="ien">Home</span></a>
-      <a href="#servicios"><span class="ies">Servicios</span><span class="ien">Services</span></a>
-      <a href="#proyectos"><span class="ies">Proyectos</span><span class="ien">Projects</span></a>
-      <a href="#sobre"><span class="ies">Sobre mí</span><span class="ien">About</span></a>
-      <a href="#contacto"><span class="ies">Contacto</span><span class="ien">Contact</span></a>
+    <button class="nav-burger" aria-label="Menú" aria-expanded="false" aria-controls="navmenu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="navmenu">
+      <a href="#inicio"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></a>
+      <a href="#servicios"><span data-lang="es">Servicios</span><span data-lang="en">Services</span></a>
+      <a href="#proyectos"><span data-lang="es">Proyectos</span><span data-lang="en">Projects</span></a>
+      <a href="#sobre"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></a>
+      <a href="#contacto"><span data-lang="es">Contacto</span><span data-lang="en">Contact</span></a>
     </div>
     <div class="lang-toggle">
       <button class="active" onclick="setLang('es')">ES</button>
@@ -276,21 +315,21 @@
 <header>
   <div class="w">
     <div class="header-top">
-      <span><span data-es>Desarrollo de software freelance · Murcia, España</span><span data-en>Freelance software development · Murcia, Spain</span></span>
+      <span><span data-lang="es">Desarrollo de software freelance · Murcia, España</span><span data-lang="en">Freelance software development · Murcia, Spain</span></span>
       <span>davidmartinezmuelas@gmail.com</span>
     </div>
     <div class="header-main">
       <h1 class="header-brand">Muelas<br><span>Dev</span></h1>
       <div class="header-right">
-        <div class="status"><span class="status-dot"></span><span data-es>Disponible para proyectos</span><span data-en>Available for projects</span></div>
+        <div class="status"><span class="status-dot"></span><span data-lang="es">Disponible para proyectos</span><span data-lang="en">Available for projects</span></div>
         <div>Python · FastAPI</div>
         <div>Flutter · Vue 3</div>
         <div>IA · Edge computing</div>
       </div>
     </div>
     <p class="header-tagline">
-      <span data-es>Software real, para proyectos que necesitan funcionar de verdad.</span>
-      <span data-en>Real software, for projects that need to actually work.</span>
+      <span data-lang="es">Software real, para proyectos que necesitan funcionar de verdad.</span>
+      <span data-lang="en">Real software, for projects that need to actually work.</span>
     </p>
   </div>
 </header>
@@ -298,26 +337,26 @@
 <!-- INICIO -->
 <section id="inicio">
   <div class="w">
-    <div class="section-label"><span data-es>Inicio</span><span data-en>Home</span></div>
+    <div class="section-label"><span data-lang="es">Inicio</span><span data-lang="en">Home</span></div>
     <div class="hero-grid fade-in">
       <div>
         <p class="hero-statement">
-          <span data-es>Construyo apps y sistemas que <em>ya están en producción</em> con usuarios reales.</span>
-          <span data-en>I build apps and systems that are <em>already in production</em> with real users.</span>
+          <span data-lang="es">Construyo apps y sistemas que <em>ya están en producción</em> con usuarios reales.</span>
+          <span data-lang="en">I build apps and systems that are <em>already in production</em> with real users.</span>
         </p>
         <div class="cta-row">
-          <a href="#contacto" class="btn-primary"><span data-es>Hablemos del proyecto</span><span data-en>Let's talk about your project</span></a>
-          <a href="#proyectos" class="btn-ghost"><span data-es>Ver proyectos →</span><span data-en>See projects →</span></a>
+          <a href="#contacto" class="btn-primary"><span data-lang="es">Hablemos del proyecto</span><span data-lang="en">Let's talk about your project</span></a>
+          <a href="#proyectos" class="btn-ghost"><span data-lang="es">Ver proyectos →</span><span data-lang="en">See projects →</span></a>
         </div>
       </div>
       <div class="hero-body">
         <div>
-          <p data-es>Backend sólido, apps móviles e integración de IA. Sin intermediarios, sin equipos grandes — el código lo escribo yo y lo entrego funcionando.</p>
-          <p data-en>Solid backend, mobile apps and AI integration. No middlemen, no big teams — I write the code myself and deliver it working.</p>
+          <p data-lang="es">Backend sólido, apps móviles e integración de IA. Sin intermediarios, sin equipos grandes — el código lo escribo yo y lo entrego funcionando.</p>
+          <p data-lang="en">Solid backend, mobile apps and AI integration. No middlemen, no big teams — I write the code myself and deliver it working.</p>
         </div>
         <div style="margin-top:0.75rem">
-          <p data-es>Si tienes una idea, un problema técnico o un proyecto que necesita arrancar, escríbeme. Respondo en menos de 24 horas.</p>
-          <p data-en>If you have an idea, a technical problem or a project that needs to get started, write to me. I respond within 24 hours.</p>
+          <p data-lang="es">Si tienes una idea, un problema técnico o un proyecto que necesita arrancar, escríbeme. Respondo en menos de 24 horas.</p>
+          <p data-lang="en">If you have an idea, a technical problem or a project that needs to get started, write to me. I respond within 24 hours.</p>
         </div>
         <div class="stack-pills">
           <span class="pill">Python</span><span class="pill">FastAPI</span><span class="pill">Flutter</span>
@@ -327,23 +366,23 @@
       </div>
     </div>
 
-    <div class="case-card" style="margin-top:2.5rem">
+    <div class="case-card">
       <div class="case-label">
-        <span data-es>Caso real · 2025 · En producción</span>
-        <span data-en>Real case · 2025 · In production</span>
+        <span data-lang="es">Caso real · 2025 · En producción</span>
+        <span data-lang="en">Real case · 2025 · In production</span>
       </div>
       <div class="case-inner">
         <div>
-          <p class="case-title"><span data-es>Sistema de teleasistencia para personas mayores</span><span data-en>Elderly teleassistance system</span></p>
+          <p class="case-title"><span data-lang="es">Sistema de teleasistencia para personas mayores</span><span data-lang="en">Elderly teleassistance system</span></p>
           <p class="case-desc">
-            <span data-es>Un sistema completo con usuarios reales activos: detección de emergencias, alertas escalonadas, asistente de voz y panel de administración en tiempo real. Diseñado y desarrollado principalmente por mí desde cero.</span>
-            <span data-en>A complete system with active real users: emergency detection, escalated alerts, voice assistant and real-time admin panel. Designed and developed primarily by me from scratch.</span>
+            <span data-lang="es">Un sistema completo con usuarios reales activos: detección de emergencias, alertas escalonadas, asistente de voz y panel de administración en tiempo real. Diseñado y desarrollado principalmente por mí desde cero.</span>
+            <span data-lang="en">A complete system with active real users: emergency detection, escalated alerts, voice assistant and real-time admin panel. Designed and developed primarily by me from scratch.</span>
           </p>
         </div>
         <div class="case-stats">
-          <div class="case-stat"><span class="case-stat-num">11</span><span class="case-stat-label"><span data-es>Workers activos</span><span data-en>Active workers</span></span></div>
-          <div class="case-stat"><span class="case-stat-num">9</span><span class="case-stat-label"><span data-es>Routers REST</span><span data-en>REST routers</span></span></div>
-          <div class="case-stat"><span class="case-stat-num">5</span><span class="case-stat-label"><span data-es>Plataformas</span><span data-en>Platforms</span></span></div>
+          <div class="case-stat"><span class="case-stat-num">11</span><span class="case-stat-label"><span data-lang="es">Workers activos</span><span data-lang="en">Active workers</span></span></div>
+          <div class="case-stat"><span class="case-stat-num">9</span><span class="case-stat-label"><span data-lang="es">Routers REST</span><span data-lang="en">REST routers</span></span></div>
+          <div class="case-stat"><span class="case-stat-num">5</span><span class="case-stat-label"><span data-lang="es">Plataformas</span><span data-lang="en">Platforms</span></span></div>
         </div>
       </div>
     </div>
@@ -353,24 +392,24 @@
 <!-- SERVICIOS -->
 <section id="servicios">
   <div class="w">
-    <div class="section-label"><span data-es>Servicios</span><span data-en>Services</span></div>
+    <div class="section-label"><span data-lang="es">Servicios</span><span data-lang="en">Services</span></div>
     <div class="services-grid fade-in">
       <div class="service-item">
         <div class="service-num">01</div>
         <h3 class="service-title">Backend &amp; APIs</h3>
-        <p class="service-desc"><span data-es>APIs REST robustas, autenticación, bases de datos relacionales, workers de background y sistemas que escalan. Código limpio, documentado y probado.</span><span data-en>Robust REST APIs, authentication, relational databases, background workers and systems that scale. Clean, documented and tested code.</span></p>
+        <p class="service-desc"><span data-lang="es">APIs REST robustas, autenticación, bases de datos relacionales, workers de background y sistemas que escalan. Código limpio, documentado y probado.</span><span data-lang="en">Robust REST APIs, authentication, relational databases, background workers and systems that scale. Clean, documented and tested code.</span></p>
         <div class="service-tags"><span class="service-tag">Python</span><span class="service-tag">FastAPI</span><span class="service-tag">PostgreSQL</span><span class="service-tag">Docker</span></div>
       </div>
       <div class="service-item">
         <div class="service-num">02</div>
-        <h3 class="service-title"><span data-es>Apps móviles &amp; web</span><span data-en>Mobile &amp; web apps</span></h3>
-        <p class="service-desc"><span data-es>Aplicaciones Android e iOS con Flutter, paneles de administración con Vue 3. Desde el diseño hasta el despliegue, con una sola base de código.</span><span data-en>Android and iOS apps with Flutter, admin panels with Vue 3. From design to deployment, with a single codebase.</span></p>
+        <h3 class="service-title"><span data-lang="es">Apps móviles &amp; web</span><span data-lang="en">Mobile &amp; web apps</span></h3>
+        <p class="service-desc"><span data-lang="es">Aplicaciones Android e iOS con Flutter, paneles de administración con Vue 3. Desde el diseño hasta el despliegue, con una sola base de código.</span><span data-lang="en">Android and iOS apps with Flutter, admin panels with Vue 3. From design to deployment, with a single codebase.</span></p>
         <div class="service-tags"><span class="service-tag">Flutter</span><span class="service-tag">Vue 3</span><span class="service-tag">Tailwind</span><span class="service-tag">Kotlin</span></div>
       </div>
       <div class="service-item">
         <div class="service-num">03</div>
-        <h3 class="service-title"><span data-es>Integración de IA</span><span data-en>AI integration</span></h3>
-        <p class="service-desc"><span data-es>Integro modelos de lenguaje (Claude, Groq) en productos reales: asistentes, sistemas de recomendación, análisis automático y automatización de procesos.</span><span data-en>I integrate language models (Claude, Groq) into real products: assistants, recommendation systems, automatic analysis and process automation.</span></p>
+        <h3 class="service-title"><span data-lang="es">Integración de IA</span><span data-lang="en">AI integration</span></h3>
+        <p class="service-desc"><span data-lang="es">Integro modelos de lenguaje (Claude, Groq) en productos reales: asistentes, sistemas de recomendación, análisis automático y automatización de procesos.</span><span data-lang="en">I integrate language models (Claude, Groq) into real products: assistants, recommendation systems, automatic analysis and process automation.</span></p>
         <div class="service-tags"><span class="service-tag">Claude API</span><span class="service-tag">Groq LLM</span><span class="service-tag">Vosk STT</span><span class="service-tag">FCM</span></div>
       </div>
     </div>
@@ -380,22 +419,22 @@
 <!-- PROYECTOS -->
 <section id="proyectos">
   <div class="w">
-    <div class="section-label"><span data-es>Proyectos</span><span data-en>Projects</span></div>
+    <div class="section-label"><span data-lang="es">Proyectos</span><span data-lang="en">Projects</span></div>
     <div class="fade-in">
       <div class="project-item">
-        <div class="project-year">2025<br><span style="color:var(--muted);font-size:10px;font-family:var(--mono)"><span data-es>En producción</span><span data-en>In production</span></span></div>
+        <div class="project-year">2025<br><span style="color:var(--muted);font-size:10px;font-family:var(--mono)"><span data-lang="es">En producción</span><span data-lang="en">In production</span></span></div>
         <div>
-          <h3 class="project-title"><span data-es>Sistema de teleasistencia para personas mayores</span><span data-en>Elderly teleassistance system</span></h3>
-          <p class="project-desc"><span data-es>Sistema full-stack activo con usuarios reales. Diseñé y desarrollé de forma principal el backend, el panel de administración y la integración de voz e IA.</span><span data-en>Active full-stack system with real users. I primarily designed and developed the backend, admin panel and voice and AI integration.</span></p>
+          <h3 class="project-title"><span data-lang="es">Sistema de teleasistencia para personas mayores</span><span data-lang="en">Elderly teleassistance system</span></h3>
+          <p class="project-desc"><span data-lang="es">Sistema full-stack activo con usuarios reales. Diseñé y desarrollé de forma principal el backend, el panel de administración y la integración de voz e IA.</span><span data-lang="en">Active full-stack system with real users. I primarily designed and developed the backend, admin panel and voice and AI integration.</span></p>
           <ul class="project-highlights">
-            <li data-es>9 routers REST + 14 modelos PostgreSQL + autenticación dual JWT</li>
-            <li data-en>9 REST routers + 14 PostgreSQL models + dual JWT authentication</li>
-            <li data-es>11 workers de background: scoring de bienestar, alertas por severidad, notificaciones push</li>
-            <li data-en>11 background workers: wellness scoring, severity alerts, push notifications</li>
-            <li data-es>Panel Vue 3 con KPIs en tiempo real y gestión de alertas</li>
-            <li data-en>Vue 3 panel with real-time KPIs and alert management</li>
-            <li data-es>Asistente de voz en Raspberry Pi + kiosk de juegos cognitivos</li>
-            <li data-en>Voice assistant on Raspberry Pi + cognitive games kiosk</li>
+            <li data-lang="es">9 routers REST + 14 modelos PostgreSQL + autenticación dual JWT</li>
+            <li data-lang="en">9 REST routers + 14 PostgreSQL models + dual JWT authentication</li>
+            <li data-lang="es">11 workers de background: scoring de bienestar, alertas por severidad, notificaciones push</li>
+            <li data-lang="en">11 background workers: wellness scoring, severity alerts, push notifications</li>
+            <li data-lang="es">Panel Vue 3 con KPIs en tiempo real y gestión de alertas</li>
+            <li data-lang="en">Vue 3 panel with real-time KPIs and alert management</li>
+            <li data-lang="es">Asistente de voz en Raspberry Pi + kiosk de juegos cognitivos</li>
+            <li data-lang="en">Voice assistant on Raspberry Pi + cognitive games kiosk</li>
           </ul>
           <div class="project-tech">
             <span class="project-badge">Python</span><span class="project-badge">FastAPI</span><span class="project-badge">PostgreSQL</span>
@@ -410,12 +449,12 @@
         <div class="project-year">2025</div>
         <div>
           <h3 class="project-title">VAT Validator</h3>
-          <p class="project-desc"><span data-es>Herramienta interna empresarial para validación masiva de números de IVA europeos contra la API oficial VIES de la UE. Diseñada para procesar grandes volúmenes sin saturar el servicio externo.</span><span data-en>Internal business tool for bulk validation of European VAT numbers against the EU's official VIES API. Designed to process large volumes without saturating the external service.</span></p>
+          <p class="project-desc"><span data-lang="es">Herramienta interna empresarial para validación masiva de números de IVA europeos contra la API oficial VIES de la UE. Diseñada para procesar grandes volúmenes sin saturar el servicio externo.</span><span data-lang="en">Internal business tool for bulk validation of European VAT numbers against the EU's official VIES API. Designed to process large volumes without saturating the external service.</span></p>
           <ul class="project-highlights">
-            <li data-es>Concurrencia controlada con asyncio para respetar el rate limiting de VIES</li>
-            <li data-en>Controlled concurrency with asyncio to respect VIES rate limiting</li>
-            <li data-es>Exportación automática de resultados en múltiples formatos</li>
-            <li data-en>Automatic export of results in multiple formats</li>
+            <li data-lang="es">Concurrencia controlada con asyncio para respetar el rate limiting de VIES</li>
+            <li data-lang="en">Controlled concurrency with asyncio to respect VIES rate limiting</li>
+            <li data-lang="es">Exportación automática de resultados en múltiples formatos</li>
+            <li data-lang="en">Automatic export of results in multiple formats</li>
           </ul>
           <div class="project-tech"><span class="project-badge">Python</span><span class="project-badge">VIES API</span><span class="project-badge">asyncio</span></div>
         </div>
@@ -426,12 +465,12 @@
         <div class="project-year">2024</div>
         <div>
           <h3 class="project-title">GastroLink</h3>
-          <p class="project-desc"><span data-es>App Android para registro y seguimiento nutricional con recomendaciones generadas por IA. Arquitectura MVVM limpia, UI moderna con Jetpack Compose y base de datos local con Room.</span><span data-en>Android app for nutritional tracking with AI-generated recommendations. Clean MVVM architecture, modern UI with Jetpack Compose and local database with Room.</span></p>
+          <p class="project-desc"><span data-lang="es">App Android para registro y seguimiento nutricional con recomendaciones generadas por IA. Arquitectura MVVM limpia, UI moderna con Jetpack Compose y base de datos local con Room.</span><span data-lang="en">Android app for nutritional tracking with AI-generated recommendations. Clean MVVM architecture, modern UI with Jetpack Compose and local database with Room.</span></p>
           <ul class="project-highlights">
-            <li data-es>Sistema de recomendaciones personalizadas via Groq LLM según historial del usuario</li>
-            <li data-en>Personalized recommendation system via Groq LLM based on user history</li>
-            <li data-es>Persistencia local completa con Room — funciona sin conexión</li>
-            <li data-en>Full local persistence with Room — works offline</li>
+            <li data-lang="es">Sistema de recomendaciones personalizadas via Groq LLM según historial del usuario</li>
+            <li data-lang="en">Personalized recommendation system via Groq LLM based on user history</li>
+            <li data-lang="es">Persistencia local completa con Room — funciona sin conexión</li>
+            <li data-lang="en">Full local persistence with Room — works offline</li>
           </ul>
           <div class="project-tech"><span class="project-badge">Kotlin</span><span class="project-badge">Jetpack Compose</span><span class="project-badge">Room</span><span class="project-badge">Groq LLM</span><span class="project-badge">MVVM</span></div>
         </div>
@@ -444,15 +483,15 @@
 <!-- SOBRE MÍ -->
 <section id="sobre">
   <div class="w">
-    <div class="section-label"><span data-es>Sobre mí</span><span data-en>About</span></div>
+    <div class="section-label"><span data-lang="es">Sobre mí</span><span data-lang="en">About</span></div>
     <div class="about-grid fade-in">
       <div>
-        <p class="about-statement"><span data-es>Experiencia real. <em>Código en producción.</em></span><span data-en>Real experience. <em>Code in production.</em></span></p>
+        <p class="about-statement"><span data-lang="es">Experiencia real. <em>Código en producción.</em></span><span data-lang="en">Real experience. <em>Code in production.</em></span></p>
         <div class="about-body">
-          <p data-es>Soy David, desarrollador junior con base en Molina de Segura (Murcia). Lo que me diferencia no es solo el tiempo que llevo programando, sino cómo trabajo: combino conocimiento técnico sólido con un uso avanzado de IA para entregar proyectos reales a una velocidad y calidad que normalmente requieren equipos más grandes.</p>
-          <p data-en>I'm David, a junior developer based in Molina de Segura (Murcia). What sets me apart isn't just how long I've been coding, but how I work: I combine solid technical knowledge with advanced AI use to deliver real projects at a speed and quality that usually requires larger teams.</p>
-          <p data-es>He diseñado y desarrollado de forma principal un sistema de teleasistencia completo — backend, app móvil, panel de administración e integración de voz — que hoy está activo con usuarios reales. Un proyecto de producción real, no de portfolio.</p>
-          <p data-en>I primarily designed and developed a complete teleassistance system — backend, mobile app, admin panel and voice integration — that is today active with real users. A real production project, not a portfolio piece.</p>
+          <p data-lang="es">Soy David, desarrollador junior con base en Molina de Segura (Murcia). Lo que me diferencia no es solo el tiempo que llevo programando, sino cómo trabajo: combino conocimiento técnico sólido con un uso avanzado de IA para entregar proyectos reales a una velocidad y calidad que normalmente requieren equipos más grandes.</p>
+          <p data-lang="en">I'm David, a junior developer based in Molina de Segura (Murcia). What sets me apart isn't just how long I've been coding, but how I work: I combine solid technical knowledge with advanced AI use to deliver real projects at a speed and quality that usually requires larger teams.</p>
+          <p data-lang="es">He diseñado y desarrollado de forma principal un sistema de teleasistencia completo — backend, app móvil, panel de administración e integración de voz — que hoy está activo con usuarios reales. Un proyecto de producción real, no de portfolio.</p>
+          <p data-lang="en">I primarily designed and developed a complete teleassistance system — backend, mobile app, admin panel and voice integration — that is today active with real users. A real production project, not a portfolio piece.</p>
         </div>
       </div>
       <div class="about-sidebar">
@@ -460,10 +499,10 @@
         <img src="foto.jpg" alt="David Martínez" style="width:100%;object-fit:cover;display:block;margin-bottom:1.5rem;">
         -->
         <div>
-          <div class="sidebar-block-label"><span data-es>Formación</span><span data-en>Education</span></div>
+          <div class="sidebar-block-label"><span data-lang="es">Formación</span><span data-lang="en">Education</span></div>
           <div class="sidebar-block-content">
-            <strong data-es>Grado Superior DAM</strong><strong data-en>Higher Degree — Multiplatform App Dev</strong><br>
-            <span data-es>Desarrollo de Aplicaciones Multiplataforma · 2024</span><span data-en>Multiplatform Application Development · 2024</span>
+            <strong data-lang="es">Grado Superior DAM</strong><strong data-lang="en">Higher Degree — Multiplatform App Dev</strong><br>
+            <span data-lang="es">Desarrollo de Aplicaciones Multiplataforma · 2024</span><span data-lang="en">Multiplatform Application Development · 2024</span>
           </div>
         </div>
         <div>
@@ -486,12 +525,12 @@
     <div class="section-label">Contacto</div>
     <div class="contact-grid fade-in">
       <div>
-        <p class="contact-intro"><span data-es>¿Tienes un proyecto? <em>Cuéntamelo.</em></span><span data-en>Got a project? <em>Tell me about it.</em></span></p>
-        <p class="contact-body"><span data-es>Respondo en menos de 24 horas. Si tienes una idea, un problema o simplemente quieres saber si puedo ayudarte, escríbeme sin compromiso.</span><span data-en>I respond in less than 24 hours. If you have an idea, a problem or just want to know if I can help, write to me with no commitment.</span></p>
+        <p class="contact-intro"><span data-lang="es">¿Tienes un proyecto? <em>Cuéntamelo.</em></span><span data-lang="en">Got a project? <em>Tell me about it.</em></span></p>
+        <p class="contact-body"><span data-lang="es">Respondo en menos de 24 horas. Si tienes una idea, un problema o simplemente quieres saber si puedo ayudarte, escríbeme sin compromiso.</span><span data-lang="en">I respond in less than 24 hours. If you have an idea, a problem or just want to know if I can help, write to me with no commitment.</span></p>
         <div class="contact-avail">
-          <strong><span data-es>Disponibilidad</span><span data-en>Availability</span></strong>
-          <span data-es>Disponible para proyectos freelance · Murcia o remoto · Respuesta en &lt;24h</span>
-          <span data-en>Available for freelance projects · Murcia or remote · Reply within 24h</span>
+          <strong><span data-lang="es">Disponibilidad</span><span data-lang="en">Availability</span></strong>
+          <span data-lang="es">Disponible para proyectos freelance · Murcia o remoto · Respuesta en &lt;24h</span>
+          <span data-lang="en">Available for freelance projects · Murcia or remote · Reply within 24h</span>
         </div>
       </div>
       <div class="contact-links">
@@ -528,6 +567,13 @@
   }
   const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.05 });
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  const nav = document.querySelector('.nav');
+  const burger = document.querySelector('.nav-burger');
+  const setMenu = open => { nav.classList.toggle('open', open); burger.setAttribute('aria-expanded', open); };
+  burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  nav.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 </script>
 </body>
 </html>
