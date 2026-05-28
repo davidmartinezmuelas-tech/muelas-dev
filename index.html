@@ -218,7 +218,7 @@
 
   /* ── SERVICIOS ── */
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); }
-  .service-item { padding: 2rem 1.5rem; border-right: 1px solid var(--border); transition: background 0.2s; }
+  .service-item { padding: 2rem 1.5rem; border-right: 1px solid var(--border); transition: background 0.2s; display: flex; flex-direction: column; }
   .service-item:last-child { border-right: none; }
   .service-item:hover { background: var(--paper-dark); }
   .service-num { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 1rem; }
@@ -226,6 +226,15 @@
   .service-desc { font-size: 14px; color: #555; line-height: 1.7; }
   .service-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 5px; align-items: flex-start; }
   .service-tag { font-family: var(--mono); font-size: 10px; padding: 2px 7px; background: var(--ink); color: #fff; }
+  .service-cta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border);
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .service-cta .arrow { color: var(--accent); transition: transform 0.2s; }
+  .service-cta:hover { color: var(--ink); }
+  .service-cta:hover .arrow { transform: translateX(3px); }
 
   /* ── PROYECTOS ── */
   .project-item {
@@ -449,18 +458,21 @@
         <h3 class="service-title">Backend &amp; APIs</h3>
         <p class="service-desc"><span data-lang="es">APIs REST robustas, autenticación, bases de datos relacionales, workers de background y sistemas que escalan. Código limpio, documentado y probado.</span><span data-lang="en">Robust REST APIs, authentication, relational databases, background workers and systems that scale. Clean, documented and tested code.</span></p>
         <div class="service-tags"><span class="service-tag">Python</span><span class="service-tag">FastAPI</span><span class="service-tag">PostgreSQL</span><span class="service-tag">Docker</span></div>
+        <a href="#contacto" class="service-cta"><span data-lang="es">Presupuesto a medida</span><span data-lang="en">Custom quote</span><span class="arrow">→</span></a>
       </div>
       <div class="service-item">
         <div class="service-num">02</div>
         <h3 class="service-title"><span data-lang="es">Apps móviles &amp; web</span><span data-lang="en">Mobile &amp; web apps</span></h3>
         <p class="service-desc"><span data-lang="es">Aplicaciones Android e iOS con Flutter, paneles de administración con Vue 3. Desde el diseño hasta el despliegue, con una sola base de código.</span><span data-lang="en">Android and iOS apps with Flutter, admin panels with Vue 3. From design to deployment, with a single codebase.</span></p>
         <div class="service-tags"><span class="service-tag">Flutter</span><span class="service-tag">Vue 3</span><span class="service-tag">Tailwind</span><span class="service-tag">Kotlin</span></div>
+        <a href="#contacto" class="service-cta"><span data-lang="es">Presupuesto a medida</span><span data-lang="en">Custom quote</span><span class="arrow">→</span></a>
       </div>
       <div class="service-item">
         <div class="service-num">03</div>
         <h3 class="service-title"><span data-lang="es">Integración de IA</span><span data-lang="en">AI integration</span></h3>
         <p class="service-desc"><span data-lang="es">Integro modelos de lenguaje (Claude, Groq) en productos reales: asistentes, sistemas de recomendación, análisis automático y automatización de procesos.</span><span data-lang="en">I integrate language models (Claude, Groq) into real products: assistants, recommendation systems, automatic analysis and process automation.</span></p>
         <div class="service-tags"><span class="service-tag">Claude API</span><span class="service-tag">Groq LLM</span><span class="service-tag">Vosk STT</span><span class="service-tag">FCM</span></div>
+        <a href="#contacto" class="service-cta"><span data-lang="es">Presupuesto a medida</span><span data-lang="en">Custom quote</span><span class="arrow">→</span></a>
       </div>
     </div>
     <div style="margin-top:2rem;text-align:center">
